@@ -12,10 +12,14 @@ export default function App() {
   const [cargaId, setCargaId] = useState(1006);
 
   useEffect(() => {
-    addTaskForeground(cargaId, () => getPosition(cargaId));
-    startForegroundService(cargaId);
+    initForeground();
     return () => closeTask();
   }, []);
+
+  function initForeground() {
+    addTaskForeground(cargaId, () => getPosition(cargaId));
+    startForegroundService(cargaId);
+  }
 
   return (
     <View style={styles.container}>
@@ -26,9 +30,7 @@ export default function App() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => startForegroundService(cargaId)}>
+        <TouchableOpacity activeOpacity={0.7} onPress={initForeground}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>Start</Text>
           </View>
